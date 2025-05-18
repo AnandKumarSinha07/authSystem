@@ -1,12 +1,13 @@
 const User = require("../model/authModel");
 const jwt=require('jsonwebtoken');
+const { JWT_SECRET } = require("./variable");
 
 
 const userAuth=async(req,res,next)=>{
     try {   
         const {token}=req.cookies;
         console.log("token is ",token)
-        const verifyToken=jwt.verify(token,"anand123@");
+        const verifyToken=jwt.verify(token,JWT_SECRET);
 
         if(!verifyToken){
             return res.status(404).json({

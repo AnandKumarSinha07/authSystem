@@ -3,6 +3,7 @@ const User = require('../model/authModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const userAuth = require('../utils/auth');
+const { JWT_SECRET } = require('../utils/variable');
 
 
 
@@ -83,7 +84,7 @@ userRouter.post("/login",async(req,res)=>{
             {
                 _id:userId,
                 email:userEmail,
-            },  "anand123@",{expiresIn:"15m"});
+            },  JWT_SECRET,{expiresIn:"15m"});
          res.cookie("token",token,{
              expires:new Date(Date.now()+8*3600000)
          });

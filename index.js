@@ -6,9 +6,11 @@ const cookieParser=require('cookie-parser')
 const app=express(); 
 app.set('view engine', 'ejs');
 app.set("views",path.join(__dirname,"/views"))
+const {port}=require('./utils/variable')
 
 
-const PORT=7777;
+
+
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(cookieParser());
@@ -17,8 +19,8 @@ app.use(express.static("public"))
 dbConnect()
 .then(()=>{
    console.log('Connected to the database');
-   app.listen(PORT,()=>{
-    console.log(`App is running on the PORT ${PORT}`);
+   app.listen(port,()=>{
+    console.log(`App is running on the PORT ${port}`);
     require('child_process').exec('start http://localhost:7777/register')
    })
 }).catch((error)=>{
