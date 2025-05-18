@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="../css/regster.css"/>
+    <script>
+        function registration(){
+            const firstName=document.forms["registerForm"]["userName"].value;
+            const email=document.forms["registerForm"]["email"].value;
+            const password=document.forms["registerForm"]["password"].value;
+
+            if(password.length<8){
+                alert('password must greater than 8')
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <h1 class="register_heading">Register Page</h1>
+       <% if(message){%>
+        <p><%=message %></p>
+        <%}%>
+
+    <form name="registerForm" action="/register" method="POST" onsubmit="return registration()" class="form_container">
+         <label for="username">Enter UserName!</label>
+         <input type="text" name="username" placeholder="Enter Name" required/>
+
+         <label for="email">Enter Email!</label>
+         <input type="email" name="email"  placeholder="Enter email" required/>
+
+         <label for="password">Enter Password!!</label>
+         <input type="password" name="password" placeholder="Enter password" required/>
+
+     
+          <div class="button_container">
+            <button type="submit" class="first_button">Register</button>
+          </div>
+     </form>
+
+    
+</body>
+</html>

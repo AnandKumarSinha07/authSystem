@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link rel="stylesheet" href="../css/regster.css">
+
+    <script>
+        function login()
+        {
+            const email=document.forms["logForm"]["email"].value;
+            const password=document.forms["logForm"]["password"].value;
+            return true;
+
+        }
+    </script>
+
+</head>
+<body>
+    
+    <h2 class="register_heading">Login Form</h2>
+    <form name="logForm" action="/login" method="POST" onsubmit=" return login()" class="form_container">
+         <label for="email">Enter Email:</label>
+        <input type="email" placeholder="Enter Email" name="email" required>
+
+        <label for="password">Enter Password:</label>
+        <input type="password" placeholder="Enter Password" name="password" required>
+
+        <button class="login_button">Login</button>
+    </form>
+</body>
+</html>
