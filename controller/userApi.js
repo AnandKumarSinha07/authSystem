@@ -35,6 +35,11 @@ userRouter.post("/register",async(req,res)=>{
             })
         }
 
+        if(!email.endsWith('@gmail.com')){
+            return res.render("register",{
+                message:"Enter valid email format"
+            })
+        }
         const findEmail=await User.findOne({email});
         if(findEmail){  
             return res.render("register",{ message: "Email or username already exists." });
@@ -68,7 +73,7 @@ userRouter.post("/login",async(req,res)=>{
       
       
       if(!findEmail){
-        return res.status(401).send("Invalid Credentials");
+        return res.render("login",{error:"Email Not found"})
       }
 
       const PasswordCompare=await bcrypt.compare(password,findEmail.password);
@@ -78,7 +83,9 @@ userRouter.post("/login",async(req,res)=>{
       console.log("user email",userEmail);
      
       if(!PasswordCompare){
-        return res.status(401).send("Invalid Credentials Password is wrong");
+        return res.render("login",{
+            message:"Enter Correct Password!!"
+        })
       }else{
          const token= await jwt.sign(
             {
@@ -86,7 +93,7 @@ userRouter.post("/login",async(req,res)=>{
                 email:userEmail,
             },  JWT_SECRET,{expiresIn:"15m"});
          res.cookie("token",token,{
-             expires:new Date(Date.now()+8*3600000)
+             expires:new Date(Date.now()+15*60*1000)
          });
       }
       res.redirect("profile")
