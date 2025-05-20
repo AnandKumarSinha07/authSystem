@@ -2,6 +2,7 @@ const express=require('express');
 const User = require('../model/authModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const axios=require('axios')
 const userAuth = require('../utils/auth');
 const { JWT_SECRET } = require('../utils/variable');
 
@@ -15,7 +16,7 @@ userRouter.get("/register",(req,res)=>{
 })
 
 userRouter.get("/login",(req,res)=>{
-    res.render("login",{message:null   })
+    res.render("login",{message:null})
 })
 
 
@@ -64,6 +65,29 @@ userRouter.post("/login",async(req,res)=>{
       
      
       const {email,password}= req.body;
+      const reCaptchaResponse=req.body["g-recaptcha-response"];
+      if(!reCaptchaResponse){
+        return res.render("profile",{
+            error:"Not able to generate captcha "
+        })
+      }
+      const verifyCaptcha=await axios.post(
+        "https://www.google.com/recaptcha/api/siteverify",
+        null,
+        {
+            params:{
+                secret:"6LchSUArAAAAAIesPAqZP5-bCgSl3xP9AE3pCpxo",
+                response:reCaptchaResponse,
+                remoteip:req.ip
+            },
+        },
+      )
+
+      if(!verifyCaptcha.data.success){
+         return res.render("login",{
+            message:"Recaptcha failed try again"
+         });
+      }
 
       console.log(email,password);
 
@@ -73,7 +97,9 @@ userRouter.post("/login",async(req,res)=>{
       
       
       if(!findEmail){
-        return res.render("login",{error:"Email Not found"})
+            return res.render("login",{
+                message:"Email Not Found!!"
+            })
       }
 
       const PasswordCompare=await bcrypt.compare(password,findEmail.password);
@@ -83,9 +109,9 @@ userRouter.post("/login",async(req,res)=>{
       console.log("user email",userEmail);
      
       if(!PasswordCompare){
-        return res.render("login",{
-            message:"Enter Correct Password!!"
-        })
+             return res.render("login",{
+                message:"Password did not match!!"
+            })
       }else{
          const token= await jwt.sign(
             {

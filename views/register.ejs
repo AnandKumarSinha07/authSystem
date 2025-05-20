@@ -15,16 +15,15 @@
                 alert('password must greater than 8')
                 return false;
             }
-
             return true;
         }
     </script>
 </head>
 <body>
     <h1 class="register_heading">Register Page</h1>
-       <% if(message){%>
-        <p><%=message %></p>
-        <%}%>
+    <% if(message){%>
+        <div class="error_message"><%=message%></div>
+    <%}%>
 
     <form name="registerForm" action="/register" method="POST" onsubmit="return registration()" class="form_container">
          <label for="username">Enter UserName!</label>

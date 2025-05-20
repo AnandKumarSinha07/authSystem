@@ -54,6 +54,13 @@
     border: none;
     border-radius: 3px;
 }
+.error_message{
+    color: red;
+    margin-left: 570px;
+    font-size: 18px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-top: 67px;
+}
 
 .login_button{
     margin-left:-245px;
@@ -63,4 +70,11 @@
     border-radius: 3px;
     color: #fff;
     background-color: black;
+}
+input{
+    font-size: 1rem;
+}
+.g-recaptcha{
+    margin-top: 5px;
+    margin-left: -16px;
 }

@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
     <link rel="stylesheet" href="../css/regster.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <script>
+
         function login()
         {
             const email=document.forms["logForm"]["email"].value;
@@ -19,6 +21,9 @@
 </head>
 <body>
     
+    <% if(message){%>
+      <div class="error_message"><%=message%></div>
+    <%}%>
     <h2 class="register_heading">Login Form</h2>
     <form name="logForm" action="/login" method="POST" onsubmit=" return login()" class="form_container">
          <label for="email">Enter Email:</label>
@@ -27,7 +32,13 @@
         <label for="password">Enter Password:</label>
         <input type="password" placeholder="Enter Password" name="password" required>
 
+        <div 
+        class="g-recaptcha"
+        data-sitekey="6LchSUArAAAAAOadm_wi5bOkohgjYE71JLPOWPwb"
+        >    
+        </div>
         <button class="login_button">Login</button>
+
     </form>
 </body>
 </html>
